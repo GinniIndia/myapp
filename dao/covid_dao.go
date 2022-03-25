@@ -15,7 +15,7 @@ type CovidDAO struct {
 var db *mgo.Database
 
 const (
-	COLLECTION = "covid_case5"
+	COLLECTION = "covid_case6"
 )
 
 // Establish a connection to database

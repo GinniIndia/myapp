@@ -56,8 +56,7 @@ func fetchAndStoreCovidData(c echo.Context) error {
          resp1, err3 := dao.FindAll(key)
          CheckError(err3)
          if len(resp1) == 0 {
-             state:= val.(map[string]interface{})
-             result := state["total"].(map[string]interface{})
+             result := val.(map[string]interface{})["total"].(map[string]interface{})
              confirmed := result["confirmed"].(float64)
              deceased := result["deceased"].(float64)
              recovered := result["recovered"].(float64)
