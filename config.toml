@@ -1,2 +1,2 @@
-server="myapp:Isrodevi@123456@myapp-east.uq8jf.mongodb.net"
+server="mongodb+srv://myapp:Isrodevi@123456@myapp-east.uq8jf.mongodb.net"
 database="covid_db"
