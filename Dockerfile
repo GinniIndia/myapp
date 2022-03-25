@@ -1,15 +1,13 @@
-FROM golang:1.16-alpine
+FROM golang:1.16
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
+COPY ./ /app
+
 RUN go mod download
 
-COPY *.go ./
+RUN go get github.com/githubnemo/CompileDaemon
 
-RUN go build -o /docker-gs-ping
+EXPOSE 3000
 
-EXPOSE 8185
-
-CMD [ "/docker-gs-ping" ]
+ENTRYPOINT CompileDaemon --command="./main" -include="*.html"
