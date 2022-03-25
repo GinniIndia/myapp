@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "os"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -145,5 +146,11 @@ func main() {
     e.GET("/v1/get_covid_patients_count_for_region", getPatientsCount)
     e.GET("/v1/health", healthCheck)
     e.GET("/v1/swagger/*", echoSwagger.WrapHandler)
-	e.Logger.Fatal(e.Start(":8185"))
+
+    port := os.Getenv("PORT")
+
+	if port == "" {
+		log.Fatal("$PORT must be set")
+	}
+	e.Logger.Fatal(e.Start(":"+port))
 }
