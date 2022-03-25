@@ -1,0 +1,53 @@
+swagger: "2.0"
+info:
+  description: "In this Project work we can store any country's state wise Active Covid Cases in Mongo Db, and using GPS coordiantes retries Active cases of respective region."
+  version: "1.0.0"
+  title: "Covid Info"
+  contact:
+    email: "gargginni01@gmail.com"
+host: "localhost:8185"
+basePath: "/v1"
+schemes:
+- "http"
+paths:
+  /get_covid_patients_count_for_region?latitude=29.065773&longitude=76.040497:
+    get:
+      summary: "Find the Active Patient count in respective State of Input GPS Co-ordinates"
+      description: "Returns info - Region Code, Active Covid Patients and TimeStamp"
+      operationId: "getPatientsCount"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "latitude"
+          in: "query"
+          description: "Latitude of Region for which we have to retrieve Active Covid Patient Count"
+          required: true
+          type: "float"
+          format: "float64"
+        - name: "longitude"
+          in: "query"
+          description: "Longitude of Region for which we have to retrieve Active Covid Patient Count"
+          required: true
+          type: "float"
+          format: "float64"
+      responses:
+        "200":
+          description: "Return Json information with following key value pairs -- {state : HR, patient_count : 135.000000, date_time : 2022-03-24 18:49:48.8928037 +0530 IST m=+17.025918401}"
+        "400":
+          description: "Invalid Input Parameters"
+        "404":
+          description: "Region Information not Found in DB"
+      security:
+        - api_key: [ ]
+  /fetch_and_store_covid_data:
+    get:
+      summary: "This api is used to store the Active Covid Cases Count State wise in Mongo DB"
+      description: "Returns info msg - Covid Info Stored SuccessFully!!"
+      operationId: "fetchAndStoreCovidData"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "Covid Info Stored SuccessFully!!"
+      security:
+        - api_key: [ ]
