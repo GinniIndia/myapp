@@ -60,8 +60,6 @@ func fetchAndStoreCovidData(c echo.Context) error {
              confirmed := result["confirmed"].(float64)
              deceased := result["deceased"].(float64)
              recovered := result["recovered"].(float64)
-             log.Print(key)
-             log.Print(confirmed - deceased - recovered)
              currentTime := time.Now()
              covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: confirmed - deceased - recovered, Date: currentTime.String()}
              err4 := dao.Insert(covidData)
@@ -87,7 +85,6 @@ func getPatientsCount(c echo.Context) error {
      CheckError(err)
      body, err1 := ioutil.ReadAll(resp.Body)
      CheckError(err1)
-     log.Print(body)
      var data map[string]interface{}
      err2 := json.Unmarshal([]byte(string(body)), &data)
      CheckError(err2)
