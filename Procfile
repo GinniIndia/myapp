@@ -1,1 +1,1 @@
-web: myapp
+web: myapp.exe
