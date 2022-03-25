@@ -10,7 +10,7 @@ basePath: "/v1"
 schemes:
 - "http"
 paths:
-  /get_covid_patients_count_for_region?latitude=29.065773&longitude=76.040497:
+  /get_covid_patients_count_for_region:
     get:
       summary: "Find the Active Patient count in respective State of Input GPS Co-ordinates"
       description: "Returns info - Region Code, Active Covid Patients and TimeStamp"
@@ -22,13 +22,13 @@ paths:
           in: "query"
           description: "Latitude of Region for which we have to retrieve Active Covid Patient Count"
           required: true
-          type: "float"
+          type: "string"
           format: "float64"
         - name: "longitude"
           in: "query"
           description: "Longitude of Region for which we have to retrieve Active Covid Patient Count"
           required: true
-          type: "float"
+          type: "string"
           format: "float64"
       responses:
         "200":
@@ -37,8 +37,6 @@ paths:
           description: "Invalid Input Parameters"
         "404":
           description: "Region Information not Found in DB"
-      security:
-        - api_key: [ ]
   /fetch_and_store_covid_data:
     get:
       summary: "This api is used to store the Active Covid Cases Count State wise in Mongo DB"
@@ -49,5 +47,24 @@ paths:
       responses:
         "200":
           description: "Covid Info Stored SuccessFully!!"
-      security:
-        - api_key: [ ]
+definitions:
+  Covid:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+        format: "bson.ObjectId"
+      State:
+        type: "string"
+      PatientCount:
+        type: "integer"
+        format: "float64"
+      Date:
+        type: "string"
+  CovidDao:
+    type: "object"
+    properties:
+      Server:
+        type: "string"
+      Database:
+        type: "string"

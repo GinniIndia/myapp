@@ -12,6 +12,8 @@ import (
 	. "myapp/models"
 	"github.com/labstack/echo/v4"
 	"time"
+	_ "myapp/docs"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 // Config variable
@@ -129,10 +131,18 @@ func getPatientsCount(c echo.Context) error {
      return c.JSON(http.StatusOK, finalResult)
 }
 
+func healthCheck(c echo.Context) error {
+   return c.JSON(http.StatusOK, map[string]interface{}{
+      "data": "Server is up and running",
+   })
+}
+
 // Start our Go Echo Application
 func main() {
 	e := echo.New()
     e.GET("/v1/fetch_and_store_covid_data", fetchAndStoreCovidData)
     e.GET("/v1/get_covid_patients_count_for_region", getPatientsCount)
+    e.GET("/v1/health", healthCheck)
+    e.GET("/v1/swagger/*", echoSwagger.WrapHandler)
 	e.Logger.Fatal(e.Start(":8185"))
 }
