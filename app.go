@@ -52,18 +52,22 @@ func fetchAndStoreCovidData(c echo.Context) error {
     err2 := json.Unmarshal([]byte(string(body)), &data)
     CheckError(err2)
     for key, val := range data {
+         result := val.(map[string]interface{})["total"].(map[string]interface{})
+         confirmed := result["confirmed"].(float64)
+         deceased := result["deceased"].(float64)
+         recovered := result["recovered"].(float64)
+         currentTime := time.Now()
+         covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: confirmed - deceased - recovered, Date: currentTime.String()}
+
          // Checking whether data already exists in db, if not present then storing it.
          resp1, err3 := dao.FindAll(key)
          CheckError(err3)
          if len(resp1) == 0 {
-             result := val.(map[string]interface{})["total"].(map[string]interface{})
-             confirmed := result["confirmed"].(float64)
-             deceased := result["deceased"].(float64)
-             recovered := result["recovered"].(float64)
-             currentTime := time.Now()
-             covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: confirmed - deceased - recovered, Date: currentTime.String()}
-             err4 := dao.Insert(covidData)
-             CheckError(err4)
+            err4 := dao.Insert(covidData)
+            CheckError(err4)
+         } else {
+            err5 := dao.Update(covidData)
+            CheckError(err5)
          }
     }
     return c.JSON(http.StatusOK, map[string]interface{}{"msg":"Covid Info Stored SuccessFully!!"})
@@ -127,6 +131,7 @@ func getPatientsCount(c echo.Context) error {
      return c.JSON(http.StatusOK, finalResult)
 }
 
+// Health Check of App
 func healthCheck(c echo.Context) error {
    return c.JSON(http.StatusOK, map[string]interface{}{
       "data": "Server is up and running",
