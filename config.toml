@@ -1,2 +1,2 @@
-server="covid013.herokuapp.com"
+server="0.0.0.0"
 database="covid_db"
