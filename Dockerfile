@@ -1,5 +1,15 @@
-FROM golang:1.16
-RUN mkdir /build
-ADD go.mod go.sum app.go /build/
-WORKDIR /build
-RUN go build
+FROM golang:1.16-alpine
+
+WORKDIR /app
+
+COPY go.mod ./
+COPY go.sum ./
+RUN go mod download
+
+COPY *.go ./
+
+RUN go build -o /docker-gs-ping
+
+EXPOSE 8185
+
+CMD [ "/docker-gs-ping" ]
