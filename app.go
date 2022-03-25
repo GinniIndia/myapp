@@ -145,5 +145,5 @@ func main() {
     e.GET("/v1/get_covid_patients_count_for_region", getPatientsCount)
     e.GET("/v1/health", healthCheck)
     e.GET("/v1/swagger/*", echoSwagger.WrapHandler)
-	e.Logger.Fatal(e.Start())
+	e.Logger.Fatal(e.Start(":8185"))
 }
