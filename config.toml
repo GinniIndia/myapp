@@ -1,2 +1,2 @@
-server="0.0.0.0"
+server="myapp-east.uq8jf.mongodb.net"
 database="covid_db"
