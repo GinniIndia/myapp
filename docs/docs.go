@@ -25,7 +25,8 @@ var doc = `{
   "host": "localhost:8185",
   "basePath": "/v1",
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "paths": {
     "/get_covid_patients_count_for_region": {

@@ -1,8 +1,0 @@
-version: "1"
-services:
-  app:
-    build: ./
-    ports:
-      - "8185:8185"
-    volumes:
-      - ./:/app
