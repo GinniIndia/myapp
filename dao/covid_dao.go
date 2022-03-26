@@ -4,7 +4,7 @@ import (
 	"log"
     "gopkg.in/mgo.v2/bson"
 	. "myapp/models"
-	mgo "gopkg.in/mgo.v2"
+	mgo "github.com/cgrates/mgo"
 )
 
 type CovidDAO struct {
