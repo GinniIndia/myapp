@@ -42,6 +42,6 @@ func (m *CovidDAO) FindAll(region_id string) ([]Covid, error) {
 
 // Update an existing covid state data
 func (m *CovidDAO) Update(covid Covid) error {
-	err := db.C(COLLECTION).Update(bson.M{"state":covid.State}, bson.M{"$set": bson.M{"patient_count":covid.PatientCount,"date_time":covid.Date}})
+	err := db.C(COLLECTION).Update(bson.M{"state":covid.State}, bson.M{"$set": bson.M{"patient_count":covid.PatientCount,"date":covid.Date}})
 	return err
 }
