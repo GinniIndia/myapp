@@ -44,7 +44,7 @@ func CheckError(err error) {
 // Fetch the Covid Data from api and Store into Mongo Db
 func fetchAndStoreCovidData(c echo.Context) error {
     apiUrl := "https://data.covid19india.org/v4/min/data.min.json"
-    log.Print(apiUrl)
+    log.Print("Covid Data API : " + apiUrl)
     resp, err := http.Get(apiUrl)
     CheckError(err)
     body, err1 := ioutil.ReadAll(resp.Body)
@@ -85,7 +85,7 @@ func getPatientsCount(c echo.Context) error {
 
      // Retriving Reverse GeoCoding data from API using respective Lattitude and Longitude values
      apiUrl := "http://api.positionstack.com/v1/reverse?access_key=" + ACCESS_KEY + "&query=" + LATITUDE + "," + LONGITUDE + "&limit=1"
-     log.Printf(apiUrl)
+     log.Printf("Reverse GeoCoding API Url : " + apiUrl)
      resp, err := http.Get(apiUrl)
      CheckError(err)
      body, err1 := ioutil.ReadAll(resp.Body)
@@ -93,6 +93,7 @@ func getPatientsCount(c echo.Context) error {
      var data map[string]interface{}
      err2 := json.Unmarshal([]byte(string(body)), &data)
      CheckError(err2)
+     log.Print("Data from Reverse GeoCoding API:")
      log.Print(data)
      regionInfo := data["data"]
 
@@ -109,7 +110,6 @@ func getPatientsCount(c echo.Context) error {
      // Validation of Inputs and Region info from DB
      if len(regionData) > 0{
         var tmpRegionCode =  regionData[0].(map[string]interface{})["region_code"]
-        log.Print(tmpRegionCode)
         if tmpRegionCode != nil {
             // Retriving RegionCode info from Reverse Geocoding API
             regionCode = tmpRegionCode.(string)
@@ -127,7 +127,9 @@ func getPatientsCount(c echo.Context) error {
         }
      }
 
-     log.Print(regionCode)
+     log.Print("Region Code : " + regionCode)
+     log.Print("Patient Count : " + patientCount)
+     log.Print("Date Time : " + dateTime)
      finalResult := map[string]interface{}{"state":regionCode, "patient_count":patientCount, "date_time":dateTime}
      return c.JSON(http.StatusOK, finalResult)
 }
