@@ -1,2 +1,2 @@
-server="mongodb+srv://myapp:Isrodevi@123456@myapp-east.uq8jf.mongodb.net"
+server="mongodb+srv://myapp:Isrodevi123456@myapp-east-shard-00-01.uq8jf.mongodb.net:27017,myapp-east-shard-00-00.uq8jf.mongodb.net:27017,myapp-east-shard-00-02.uq8jf.mongodb.net:27017/covid_db?ssl=true&authSource=admin"
 database="covid_db"
