@@ -9,6 +9,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/armon/go-radix v1.0.0 // indirect
 	github.com/boltdb/bolt v1.3.1 // indirect
+	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8 // indirect
 	github.com/go-openapi/runtime v0.23.3 // indirect
 	github.com/go-ozzo/ozzo-validation/v3 v3.8.1 // indirect
 	github.com/golang/dep v0.5.4 // indirect
