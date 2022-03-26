@@ -22,7 +22,7 @@ var config = Config{}
 var dao = CovidDAO{}
 
 // Global Variables
-var ACCESS_KEY = "bb0fe31b2d1f4f3434f1a7c3d0e024c5"
+var ACCESS_KEY = "" // Create a ACCESS_KEY for Reverse Gecoding API and define in this string.
 var LATITUDE string
 var LONGITUDE string
 
