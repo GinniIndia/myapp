@@ -41,6 +41,19 @@ func CheckError(err error) {
      }
 }
 
+func saveToDb(key string, covidData Covid) {
+     // Checking whether data already exists in db, if not present then storing it.
+     resp1, err3 := dao.FindAll(key)
+     CheckError(err3)
+     if len(resp1) == 0 {
+        err4 := dao.Insert(covidData)
+        CheckError(err4)
+     } else {
+        err5 := dao.Update(covidData)
+        CheckError(err5)
+     }
+}
+
 // Fetch the Covid Data from api and Store into Mongo Db
 func fetchAndStoreCovidData(c echo.Context) error {
     apiUrl := "https://data.covid19india.org/v4/min/data.min.json"
@@ -52,25 +65,20 @@ func fetchAndStoreCovidData(c echo.Context) error {
     var data map[string]interface{}
     err2 := json.Unmarshal([]byte(string(body)), &data)
     CheckError(err2)
+    var indiaCount float64
     for key, val := range data {
          result := val.(map[string]interface{})["total"].(map[string]interface{})
          confirmed := result["confirmed"].(float64)
          deceased := result["deceased"].(float64)
          recovered := result["recovered"].(float64)
-         currentTime := time.Now()
-         covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: confirmed - deceased - recovered, Date: currentTime.String()}
-
-         // Checking whether data already exists in db, if not present then storing it.
-         resp1, err3 := dao.FindAll(key)
-         CheckError(err3)
-         if len(resp1) == 0 {
-            err4 := dao.Insert(covidData)
-            CheckError(err4)
-         } else {
-            err5 := dao.Update(covidData)
-            CheckError(err5)
-         }
+         patientCount := confirmed - deceased - recovered
+         covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: patientCount, Date: time.Now().String()}
+         indiaCount += patientCount
+         saveToDb(key, covidData)
     }
+    var india = "IND"
+    covidIndiaData := Covid{ID: bson.NewObjectId(), State: india, PatientCount: indiaCount, Date: time.Now().String()}
+    saveToDb(india, covidIndiaData)
     return c.JSON(http.StatusOK, map[string]interface{}{"msg":"Covid Info Stored SuccessFully!!"})
 }
 
