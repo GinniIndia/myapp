@@ -56,6 +56,7 @@ func saveToDb(key string, covidData Covid) {
 
 // Fetch the Covid Data from api and Store into Mongo Db
 func fetchAndStoreCovidData(c echo.Context) error {
+    currTime := time.Now()
     apiUrl := "https://data.covid19india.org/v4/min/data.min.json"
     log.Print("Covid Data API : " + apiUrl)
     resp, err := http.Get(apiUrl)
@@ -72,12 +73,12 @@ func fetchAndStoreCovidData(c echo.Context) error {
          deceased := result["deceased"].(float64)
          recovered := result["recovered"].(float64)
          patientCount := confirmed - deceased - recovered
-         covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: patientCount, Date: time.Now().String()}
+         covidData := Covid{ID: bson.NewObjectId(), State: key, PatientCount: patientCount, Date: currTime.String()}
          indiaCount += patientCount
          saveToDb(key, covidData)
     }
-    var india = "IND"
-    covidIndiaData := Covid{ID: bson.NewObjectId(), State: india, PatientCount: indiaCount, Date: time.Now().String()}
+    india := "IND"
+    covidIndiaData := Covid{ID: bson.NewObjectId(), State: india, PatientCount: indiaCount, Date: currTime.String()}
     saveToDb(india, covidIndiaData)
     return c.JSON(http.StatusOK, map[string]interface{}{"msg":"Covid Info Stored SuccessFully!!"})
 }

@@ -1,14 +1,14 @@
 # myapp
-=====================
-Project: Covid Info. 
-=====================
+
+# Project: Covid Info. 
+
 Tech Stack: Golang (Echo Framework) and MongoDB. \
 API Doc: Swagger. \
 Cloud: Heroku
 
 
 Check Doc here: \
-https://covid013.herokuapp.com/v1/swagger/index.html \
+https://covid013.herokuapp.com/v1/swagger/index.html 
 
 Set Config Var in Heroku: \
 GOVERSION=go1.16 
