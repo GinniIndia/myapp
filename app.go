@@ -27,12 +27,12 @@ var LATITUDE string
 var LONGITUDE string
 
 // Parse the configuration file 'config.toml', and establish a connection to DB
-func init() {
-	config.Read()
-	dao.Server = config.Server
-	dao.Database = config.Database
-	dao.Connect()
-}
+//func init() {
+//	config.Read()
+//	dao.Server = config.Server
+//	dao.Database = config.Database
+//	dao.Connect()
+//}
 
 // Log Error Information
 func CheckError(err error) {
